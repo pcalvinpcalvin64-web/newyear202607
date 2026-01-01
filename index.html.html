@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Dear - 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --primary-purple: #c9ffbf; /* Will be used in gradient */
+            --glass: rgba(255, 255, 255, 0.25);
+            --accent: #8e44ad;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Floating Hearts Container */
+        #heart-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+
+        .heart {
+            position: absolute; color: #ff7675;
+            animation: float 5s linear infinite; opacity: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Main UI */
+        .container {
+            position: relative; z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            height: 100%; width: 100%; padding: 20px;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 400px;
+            padding: 30px; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideIn 0.8s ease;
+        }
+
+        .active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem; color: var(--accent); margin: 0 0 15px 0;
+        }
+
+        p { font-size: 1.15rem; line-height: 1.6; color: #2d3436; margin-bottom: 20px; }
+
+        .img-box {
+            width: 100%; height: 280px; border-radius: 25px;
+            overflow: hidden; border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        #music-btn {
+            background: #fff; border: none; padding: 12px 25px;
+            border-radius: 30px; color: var(--accent); font-weight: bold;
+            font-family: inherit; cursor: pointer; margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .hint {
+            position: fixed; bottom: 30px; width: 100%; text-align: center;
+            color: white; font-size: 0.8rem; letter-spacing: 3px; font-weight: bold;
+        }
+    </style>
+</head>
+<body onclick="nextSlide()">
+
+    <audio id="myAudio" loop>
+        <source src="music." type="audio/mpeg">
+    </audio>
+
+    <div id="heart-container"></div>
+
+    <div class="container">
+        <div class="slide active">
+            <button id="music-btn" onclick="startEverything(event)">🎵 Tap to Start Our 2026</button>
+            <h1>Dear...</h1>
+            <div class="img-box">
+                <img src="photo1.jpeg" alt="Us">
+            </div>
+            <p>2025 was the best year of my life, all because I had you by my side. Thank you for everything, Dear.</p>
+        </div>
+
+        <div class="slide">
+            <h1>My World</h1>
+            <p>Dear, the way you love and care for me is a gift I'll never take for granted. You are my peace and my home.</p>
+        </div>
+
+        <div class="slide">
+            <h1>So Beautiful</h1>
+            <div class="img-box">
+                <img src="photo2.jpeg" alt="You">
+            </div>
+            <p>Every time I look at you, Dear, I realize how lucky I am. You grow more beautiful to me every single day.</p>
+        </div>
+
+        <div class="slide">
+            <h1>Our Journey</h1>
+            <p>Thank you for sticking with me through it all. I am so proud of us, Dear. Here is to all our dreams coming true.</p>
+        </div>
+
+        <div class="slide">
+            <h1>Happy 2026!</h1>
+            <div class="img-box">
+                <img src="photo3.jpeg" alt="New Year">
+            </div>
+            <p>To my favorite person: Let's make 2026 our most beautiful year yet. I love you endlessly, Dear! ❤️</p>
+        </div>
+    </div>
+
+    <div class="hint">TAP TO CONTINUE</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const audio = document.getElementById("myAudio");
+
+        function startEverything(e) {
+            e.stopPropagation();
+            audio.play();
+            document.getElementById('music-btn').style.display = 'none';
+        }
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
